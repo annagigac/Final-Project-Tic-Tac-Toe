@@ -51,24 +51,38 @@ def is_draw(board): #detect draw -- is_draw(board)
                 return False
     return True
 
-def main():
-    board = create_board()
-    current_player = "X"
-    game_over = False
-    while not game_over:
-        print_board(board)
-        get_valid_move(board, current_player)
-        if check_winner(board, current_player):
-            print_board(board)
-            print(f"Player {current_player} wins!")
-            game_over = True
-        elif is_draw(board):
-            print_board(board)
-            print("It's a draw!")
-            game_over = True
+def play_again():
+    while True:
+        answer = input("Would you like to play again? (yes/no): ").lower()
+        if answer == "yes":
+            return True
+        elif answer == "no":
+            return False
         else:
-            if current_player == "X":  #alternate turns
-                current_player = "O"
+            print("Please type 'yes' or 'no'.")
+
+def main():
+    while True:
+        board = create_board()
+        current_player = "X"
+        game_over = False
+        while not game_over:
+            print_board(board)
+            get_valid_move(board, current_player)
+            if check_winner(board, current_player):
+                print_board(board)
+                print(f"Player {current_player} wins!")
+                game_over = True
+            elif is_draw(board):
+                print_board(board)
+                print("It's a draw!")
+                game_over = True
             else:
-                current_player = "X"
+                if current_player == "X":
+                    current_player = "O"
+                else:
+                    current_player = "X"
+        if not play_again():
+            print("Thanks for playing!")
+            break
 main()
