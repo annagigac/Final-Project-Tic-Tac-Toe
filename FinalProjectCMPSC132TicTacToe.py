@@ -30,3 +30,16 @@ def get_valid_move(board, player): #row and col player input w/ invalid moves ex
                 valid = True   
         except ValueError:
             print("Please enter numbers only.")
+
+def check_winner(board, player): #detect winner -- check_winner(board, player)
+    for row in board:
+        if row[0] == player and row[1] == player and row[2] == player:
+            return True
+    for col in range(3):
+        if board[0][col] == player and board[1][col] == player and board[2][col] == player:
+            return True
+    if board[0][0] == player and board[1][1] == player and board[2][2] == player:
+        return True
+    if board[0][2] == player and board[1][1] == player and board[2][0] == player:
+        return True
+    return False
