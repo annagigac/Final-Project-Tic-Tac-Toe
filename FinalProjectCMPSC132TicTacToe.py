@@ -43,3 +43,32 @@ def check_winner(board, player): #detect winner -- check_winner(board, player)
     if board[0][2] == player and board[1][1] == player and board[2][0] == player:
         return True
     return False
+
+def is_draw(board): #detect draw -- is_draw(board)
+    for row in board:
+        for spot in row:
+            if spot == " ":
+                return False
+    return True
+
+def main():
+    board = create_board()
+    current_player = "X"
+    game_over = False
+    while not game_over:
+        print_board(board)
+        get_valid_move(board, current_player)
+        if check_winner(board, current_player):
+            print_board(board)
+            print(f"Player {current_player} wins!")
+            game_over = True
+        elif is_draw(board):
+            print_board(board)
+            print("It's a draw!")
+            game_over = True
+        else:
+            if current_player == "X":  #alternate turns
+                current_player = "O"
+            else:
+                current_player = "X"
+main()
