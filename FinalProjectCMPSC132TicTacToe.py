@@ -8,21 +8,22 @@ def create_board():  #create 3x3 board -- list of lists
 
 def print_board(board): #display board -- print_board(board)
     print()
-    print("  0   1   2")
+    print("  0   1   2") #row indexes
     for i in range(3):
-        print(i, board[i][0], "|", board[i][1], "|", board[i][2])
+        print(i, board[i][0], "|", board[i][1], "|", board[i][2]) #creating borders
         if i < 2:
-            print(" ---+---+---")
+            print(" ---+---+---") # creating middle lines that do not go in between spaces
     print()
 
 def get_valid_move(board, player): #row and col player input w/ invalid moves ex. 0-2
-    valid = False
+    valid = False 
     while not valid:
         try:
-            row = int(input(f"Player {player}, enter row 0-2: "))
-            col = int(input(f"Player {player}, enter column 0-2: "))
-            if row < 0 or row > 2 or col < 0 or col > 2:
-                print("That spot is outside the board. Try again.")
+            row = int(input(f"Player {player}, enter row 0-2: ")) #row input
+            col = int(input(f"Player {player}, enter column 0-2: ")) #column input
+        #input validation
+            if row < 0 or row > 2 or col < 0 or col > 2: 
+                print("That spot is outside the board. Try again.") 
             elif board[row][col] != " ":
                 print("That spot is already taken. Try again.")
             else:
@@ -33,11 +34,14 @@ def get_valid_move(board, player): #row and col player input w/ invalid moves ex
 
 def check_winner(board, player): #detect winner -- check_winner(board, player)
     for row in board:
-        if row[0] == player and row[1] == player and row[2] == player:
+    #Check straight across win
+        if row[0] == player and row[1] == player and row[2] == player: 
             return True
     for col in range(3):
+    #Check up and down win
         if board[0][col] == player and board[1][col] == player and board[2][col] == player:
             return True
+    #Check Diagonal Win
     if board[0][0] == player and board[1][1] == player and board[2][2] == player:
         return True
     if board[0][2] == player and board[1][1] == player and board[2][0] == player:
@@ -47,35 +51,39 @@ def check_winner(board, player): #detect winner -- check_winner(board, player)
 def is_draw(board): #detect draw -- is_draw(board)
     for row in board:
         for spot in row:
+        #If there is an empty spot, draw is False
             if spot == " ":
                 return False
     return True
 
 def play_again():
     while True:
+        #Allow any input such as Yes, YES, yes 
         answer = input("Would you like to play again? (yes/no): ").lower()
         if answer == "yes":
             return True
         elif answer == "no":
             return False
+        #Input validation - must be yes or no
         else:
             print("Please type 'yes' or 'no'.")
 
 
-def print_score(x_score, o_score, draws):
+def print_score(x_score, o_score, draws): 
     print("\nScoreboard")
     print(f"Player X wins: {x_score}")
     print(f"Player O wins: {o_score}")
     print(f"Draws: {draws}\n")
 
 def main():
+    #Score starts at zero 
     x_score = 0
     o_score = 0
     draws = 0
     playing = True
     while playing:
         board = create_board()
-        current_player = "X"
+        current_player = "X" #Player X begins
         game_over = False
         while not game_over:
             print_board(board)
@@ -83,6 +91,7 @@ def main():
             if check_winner(board, current_player):
                 print_board(board)
                 print(f"Player {current_player} wins!")
+            #Add a tally to the score for whoever won
                 if current_player == "X":
                     x_score += 1
                 else:
@@ -94,11 +103,13 @@ def main():
                 draws += 1
                 game_over = True
             else:
+            #Switching Player Turns
                 if current_player == "X":
                     current_player = "O"
                 else:
                     current_player = "X"
         print_score(x_score, o_score, draws)
+        #Update if the player wants to play again
         playing = play_again()
     print("Thanks for playing!")
 main ()
