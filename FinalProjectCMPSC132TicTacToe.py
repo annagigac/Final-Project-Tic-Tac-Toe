@@ -61,8 +61,19 @@ def play_again():
         else:
             print("Please type 'yes' or 'no'.")
 
+
+def print_score(x_score, o_score, draws):
+    print("\nScoreboard")
+    print(f"Player X wins: {x_score}")
+    print(f"Player O wins: {o_score}")
+    print(f"Draws: {draws}\n")
+
 def main():
-    while True:
+    x_score = 0
+    o_score = 0
+    draws = 0
+    playing = True
+    while playing:
         board = create_board()
         current_player = "X"
         game_over = False
@@ -72,17 +83,22 @@ def main():
             if check_winner(board, current_player):
                 print_board(board)
                 print(f"Player {current_player} wins!")
+                if current_player == "X":
+                    x_score += 1
+                else:
+                    o_score += 1
                 game_over = True
             elif is_draw(board):
                 print_board(board)
                 print("It's a draw!")
+                draws += 1
                 game_over = True
             else:
                 if current_player == "X":
                     current_player = "O"
                 else:
                     current_player = "X"
-        if not play_again():
-            print("Thanks for playing!")
-            break
-main()
+        print_score(x_score, o_score, draws)
+        playing = play_again()
+    print("Thanks for playing!")
+main ()
